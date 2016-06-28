@@ -37,6 +37,18 @@ public class LeagueManager {
         organizerMenu.show();
     }
 
+    private static void createTeam() {
+        System.out.print("Team Name> ");
+        String team = scanner.nextLine();
+        System.out.print("Coach Name> ");
+        String coach = scanner.nextLine();
+
+        teams.add(new Team(team, coach));
+        Collections.sort(teams);
+        System.out.printf("Team %s created.%n", team);
+        showOrganizerMenu();
+    }
+
     private static void removePlayer() {
         Team team = teamSelect();
         List<Player> players = team.getPlayers();
@@ -72,17 +84,6 @@ public class LeagueManager {
         System.out.print("Player> ");
         // ToDo: Error Handling
         return players.get(scanner.nextInt() -1);
-    }
-
-    private static void createTeam() {
-        System.out.print("Team Name> ");
-        String team = scanner.nextLine();
-        System.out.print("Coach Name> ");
-        String coach = scanner.nextLine();
-
-        teams.add(new Team(team, coach));
-        System.out.printf("Team %s created.%n", team);
-        showOrganizerMenu();
     }
 
 }
