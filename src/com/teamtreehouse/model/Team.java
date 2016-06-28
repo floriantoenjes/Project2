@@ -1,7 +1,6 @@
 package com.teamtreehouse.model;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Team implements Comparable<Team>{
     private final String name;
@@ -20,7 +19,9 @@ public class Team implements Comparable<Team>{
 
     public void addPlayer(Player player) {
         players.add(player);
-        Collections.sort(players);
+        players.sort( (player1, player2) -> {
+            return player1.toString().compareTo(player2.toString());
+        });
     }
 
     public void removePlayer(Player player) {

@@ -55,14 +55,19 @@ public class LeagueManager {
         if (players.size() > 0) {
             Player player = playerSelect(players);
             team.removePlayer(player);
+            System.out.printf("%s has been removed from team %s", player, team);
         }
+
+
 
         showOrganizerMenu();
     }
 
     private static void addPlayer() {
-        teamSelect().addPlayer(playerSelect(allPlayers));
-        System.out.println("Player added");
+        Team team = teamSelect();
+        Player player = playerSelect(allPlayers);
+        team.addPlayer(player);
+        System.out.printf("%s has been added to team %s", player, team);
 
         showOrganizerMenu();
     }
