@@ -29,4 +29,8 @@ public class Team implements Comparable<Team>{
     public String toString() {
         return name;
     }
+
+    public ArrayList<Player> getPlayers() {
+        return new ArrayList<Player>(players);
+    }
 }

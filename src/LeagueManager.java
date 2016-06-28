@@ -6,6 +6,7 @@ import java.util.*;
 
 public class LeagueManager {
     static Player[] players = Players.load();
+    static List<Player> allPlayers = new ArrayList<>(Arrays.asList(players));
     static ArrayList<Team> teams = new ArrayList<>();
     static Scanner scanner = new Scanner(System.in);
 
@@ -28,7 +29,7 @@ public class LeagueManager {
     private static void showOrganizerMenu() {
         Menu organizerMenu = new Menu();
         organizerMenu.addMenuItem("Create Team", LeagueManager::createTeam);
-        if (teams.size() > 1) {
+        if (teams.size() > 0) {
             organizerMenu.addMenuItem("Add Player", LeagueManager::addPlayer);
             organizerMenu.addMenuItem("Delete Player", LeagueManager::removePlayer);
             organizerMenu.addMenuItem("Back", LeagueManager::showMainMenu);
@@ -37,19 +38,24 @@ public class LeagueManager {
     }
 
     private static void removePlayer() {
-        teamSelect().removePlayer();
+        Team team = teamSelect();
+        List<Player> players = team.getPlayers();
+        if (players.size() > 0) {
+            Player player = playerSelect(players);
+            team.removePlayer(player);
+        }
+
+        showOrganizerMenu();
     }
 
     private static void addPlayer() {
-        teamSelect().addPlayer(playerSelect());
+        teamSelect().addPlayer(playerSelect(allPlayers));
         System.out.println("Player added");
 
         showOrganizerMenu();
-
     }
 
     private static Team teamSelect() {
-
         int i = 1;
         for (Team team: teams) {
             System.out.printf("%d %s%n", i, team);
@@ -59,13 +65,13 @@ public class LeagueManager {
         return teams.get(scanner.nextInt() - 1);
     }
 
-    private static Player playerSelect() {
-        for (int i = 0; i < players.length; i++) {
-            System.out.printf("%d %s%n", i+1, players[i]);
+    private static Player playerSelect(List<Player> players) {
+        for (int i = 0; i < players.size(); i++) {
+            System.out.printf("%d %s%n", i+1, players.get(i));
         }
         System.out.print("Player> ");
         // ToDo: Error Handling
-        return players[scanner.nextInt() - 1];
+        return players.get(scanner.nextInt() -1);
     }
 
     private static void createTeam() {
