@@ -1,7 +1,8 @@
+package display;
+
 import util.Prompter;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Menu  {
     private ArrayList<MenuItem> menuItems = new ArrayList<>();

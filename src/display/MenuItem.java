@@ -1,3 +1,5 @@
+package display;
+
 public class MenuItem {
     private String name;
     private Runnable runnable;
