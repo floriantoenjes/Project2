@@ -103,6 +103,7 @@ public class LeagueManager {
             String experienced = (player.isPreviousExperience()) ? "Yes" : "No";
             System.out.printf("%d %s | Height: %d | Experienced: %s %n", i+1, player, player.getHeightInInches(), experienced);
         }
+        System.out.println();
     }
 
     private static Player playerSelect(Set<Player> players) {
@@ -110,9 +111,9 @@ public class LeagueManager {
         listPlayers(players);
         int playerNumber;
         do {
-            playerNumber = Prompter.promptInt("Player> ");
-        } while (playerNumber == 0 && playerNumber <= playerList.size());
-        return playerList.get(playerNumber -1);
+            playerNumber = Prompter.promptInt("Player> ") -1;
+        } while (playerNumber <= 0 || playerNumber >= playerList.size());
+        return playerList.get(playerNumber);
     }
 
     private static Team teamSelect() {
