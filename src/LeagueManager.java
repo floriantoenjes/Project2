@@ -133,8 +133,9 @@ public class LeagueManager {
         Team team = teamSelect();
         if (team.getPlayers().size() > 0) {
             int height = 0;
+            int avgHeight;
             Set<Player> small = new TreeSet<>();
-            Set<Player> usual = new TreeSet<>();
+            Set<Player> average = new TreeSet<>();
             Set<Player> big = new TreeSet<>();
             Set<Player> players = team.getPlayers();
 
@@ -143,23 +144,23 @@ public class LeagueManager {
                 if (tmpHeight < 39) {
                     small.add(player);
                 } else if (tmpHeight > 38 && tmpHeight < 44) {
-                    usual.add(player);
+                    average.add(player);
                 } else {
                     big.add(player);
                 }
                 height += player.getHeightInInches();
             }
-            int avgHeight = height / players.size();
+            avgHeight = height / players.size();
             System.out.printf("%nThe average height for team %s is %d inches%n%n", team, avgHeight);
-            System.out.println("Small:");
+            System.out.printf("%d Small:%n", small.size());
             small.forEach( p ->
                 System.out.printf("%s - %d\"%n%n", p.toString(), p.getHeightInInches())
             );
-            System.out.println("Usual:");
-            usual.forEach( p ->
+            System.out.printf("%d Average:%n", average.size());
+            average.forEach( p ->
                 System.out.printf("%s - %d\"%n%n", p.toString(), p.getHeightInInches())
             );
-            System.out.println("Big:");
+            System.out.printf("%d Big:%n", big.size());
             big.forEach( p ->
                 System.out.printf("%s - %d\"%n%n", p.toString(), p.getHeightInInches())
             );
