@@ -19,6 +19,8 @@ public class LeagueManager {
     private static void showMainMenu() {
         Menu mainMenu = new Menu();
         mainMenu.addMenuItem("Organizer", LeagueManager::showOrganizerMenu);
+        mainMenu.addMenuItem("Coach", LeagueManager::showCoachMenu);
+        mainMenu.addMenuItem("Administrator", LeagueManager::showAdminMenu);
         mainMenu.addMenuItem("Exit", () -> {
             System.out.println("Exiting...");
             System.exit(0);
@@ -26,14 +28,25 @@ public class LeagueManager {
         mainMenu.show();
     }
 
+    private static void showAdminMenu() {
+
+    }
+
+    private static void showCoachMenu() {
+        Team team = teamSelect();
+        Menu coachMenu = new Menu();
+        coachMenu.addMenuItem("Roster", () -> roster(team));
+        coachMenu.show();
+    }
+
     private static void showOrganizerMenu() {
-        System.out.println();
         Menu organizerMenu = new Menu();
         organizerMenu.addMenuItem("Create Team", LeagueManager::createTeam);
         if (teams.size() > 0) {
             organizerMenu.addMenuItem("Add Player", LeagueManager::addPlayer);
             organizerMenu.addMenuItem("Delete Player", LeagueManager::removePlayer);
             organizerMenu.addMenuItem("Height Report", LeagueManager::heightReport);
+            organizerMenu.addMenuItem("League Balance Report", LeagueManager::leagueBalanceReport);
             organizerMenu.addMenuItem("Back", LeagueManager::showMainMenu);
         }
         organizerMenu.show();
@@ -52,7 +65,6 @@ public class LeagueManager {
     }
 
     private static void removePlayer() {
-        System.out.println();
         Team team = teamSelect();
         List<Player> players = team.getPlayers();
         if (players.size() > 0) {
@@ -68,14 +80,12 @@ public class LeagueManager {
         Team team = teamSelect();
         Player player = playerSelect(allPlayers);
         team.addPlayer(player);
-        System.out.printf("%s has been added to team %s", player, team);
+        System.out.printf("%s has been added to team %s%n", player, team);
 
         showOrganizerMenu();
     }
 
     private static Team teamSelect() {
-        System.out.println();
-        System.out.println();
         int i = 1;
         for (Team team: teams) {
             System.out.printf("%d %s%n", i, team);
@@ -86,24 +96,21 @@ public class LeagueManager {
     }
 
     private static void listPlayers(List<Player> players) {
-
-    }
-
-    private static Player playerSelect(List<Player> players) {
-        System.out.println();
         for (int i = 0; i < players.size(); i++) {
             Player player = players.get(i);
             String experienced = (player.isPreviousExperience()) ? "Yes" : "No";
             System.out.printf("%d %s | Height: %d | Experienced: %s %n", i+1, player, player.getHeightInInches(), experienced);
         }
-        System.out.println();
+    }
+
+    private static Player playerSelect(List<Player> players) {
+        listPlayers(players);
         System.out.print("Player> ");
         // ToDo: Error Handling
         return players.get(scanner.nextInt() -1);
     }
 
     private static void heightReport() {
-        System.out.println();
         int height = 0;
         Team team = teamSelect();
         if (team.getPlayers().size() > 0) {
@@ -134,10 +141,8 @@ public class LeagueManager {
         System.out.printf("Experienced Players: %d%n Inexperienced Players: %d%n", experiencedPlayers, inExperiencedPlayers);
     }
 
-    private static void roster() {
-        Team team = teamSelect();
-
-        for
+    private static void roster(Team team) {
+        listPlayers(team.getPlayers());
     }
 
 }
