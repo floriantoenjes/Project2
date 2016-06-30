@@ -10,10 +10,12 @@ public class LeagueManager {
     static List<Player> availablePlayers = new ArrayList<>(Arrays.asList(players));
     static ArrayList<Team> teams = new ArrayList<>();
 
+    static {
+        Collections.sort(availablePlayers);
+    }
+
     public static void main(String[] args) {
         System.out.printf("There are currently %d registered players.%n", players.length);
-        // Your code here!
-        Collections.sort(availablePlayers);
         showMainMenu();
     }
 
@@ -76,7 +78,6 @@ public class LeagueManager {
         team.addPlayer(player);
         availablePlayers.remove(player);
         System.out.printf("%n%s has been added to team %s%n", player, team);
-
         showOrganizerMenu();
     }
 
@@ -90,7 +91,6 @@ public class LeagueManager {
             Collections.sort(availablePlayers);
             System.out.printf("%n%s has been removed from team %s%n%n", player, team);
         }
-
         showOrganizerMenu();
     }
 
@@ -104,7 +104,6 @@ public class LeagueManager {
 
     private static Player playerSelect(List<Player> players) {
         listPlayers(players);
-        // ToDo: Error Handling
         int playerNumber = 0;
         do {
             playerNumber = Prompter.promptInt("Player> ");
@@ -117,7 +116,6 @@ public class LeagueManager {
         for (Team team: teams) {
             System.out.printf("%d %s%n", i++, team);
         }
-        // ToDo: Error Handling
         int teamNumber = 0;
         do {
             teamNumber = Prompter.promptInt("Team>");
@@ -163,12 +161,10 @@ public class LeagueManager {
             heightCounts.forEach((height, count) -> System.out.printf("%s\": %d players%n", height, count));
             System.out.println();
         }
-
         showOrganizerMenu();
     }
 
     private static void roster(Team team) {
-
         listPlayers(team.getPlayers());
         showMainMenu();
     }
