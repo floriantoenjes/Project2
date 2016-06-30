@@ -1,11 +1,12 @@
 package com.teamtreehouse.model;
 
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 public class Team implements Comparable<Team>{
     private final String name;
     private String coach;
-    ArrayList<Player> players = new ArrayList<>();
+    TreeSet<Player> players = new TreeSet<>();
 
     public Team(String team, String coach) {
         this.name = team;
@@ -20,9 +21,6 @@ public class Team implements Comparable<Team>{
     public void addPlayer(Player player) {
         if (!players.contains(player)) {
             players.add(player);
-            players.sort((player1, player2) ->
-                player1.toString().compareTo(player2.toString())
-            );
         }
     }
 
@@ -35,7 +33,7 @@ public class Team implements Comparable<Team>{
         return name;
     }
 
-    public ArrayList<Player> getPlayers() {
-        return new ArrayList<>(players);
+    public TreeSet<Player> getPlayers() {
+        return new TreeSet<>(players);
     }
 }

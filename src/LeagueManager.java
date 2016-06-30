@@ -7,12 +7,8 @@ import java.util.*;
 
 public class LeagueManager {
     static Player[] players = Players.load();
-    static List<Player> availablePlayers = new ArrayList<>(Arrays.asList(players));
-    static ArrayList<Team> teams = new ArrayList<>();
-
-    static {
-        Collections.sort(availablePlayers);
-    }
+    static Set<Player> availablePlayers = new TreeSet<>(Arrays.asList(players));
+    static List<Team> teams = new ArrayList<>();
 
     public static void main(String[] args) {
         System.out.printf("There are currently %d registered players.%n", players.length);
@@ -33,11 +29,11 @@ public class LeagueManager {
     }
 
     private static void showCoachMenu() {
-            Team team = teamSelect();
-            Menu coachMenu = new Menu();
-            coachMenu.addMenuItem("Roster", () -> roster(team));
-            coachMenu.addMenuItem("Back", LeagueManager::showMainMenu);
-            coachMenu.show();
+        Team team = teamSelect();
+        Menu coachMenu = new Menu();
+        coachMenu.addMenuItem("Roster", () -> roster(team));
+        coachMenu.addMenuItem("Back", LeagueManager::showMainMenu);
+        coachMenu.show();
     }
 
 
@@ -72,7 +68,6 @@ public class LeagueManager {
     }
 
     private static void addPlayer() {
-
         Team team = teamSelect();
         Player player = playerSelect(availablePlayers);
         team.addPlayer(player);
@@ -83,32 +78,33 @@ public class LeagueManager {
 
     private static void removePlayer() {
         Team team = teamSelect();
-        List<Player> players = team.getPlayers();
+        Set<Player> players = team.getPlayers();
         if (players.size() > 0) {
             Player player = playerSelect(players);
             team.removePlayer(player);
             availablePlayers.add(player);
-            Collections.sort(availablePlayers);
             System.out.printf("%n%s has been removed from team %s%n%n", player, team);
         }
         showOrganizerMenu();
     }
 
-    private static void listPlayers(List<Player> players) {
-        for (int i = 0; i < players.size(); i++) {
-            Player player = players.get(i);
+    private static void listPlayers(Set<Player> players) {
+        List<Player> playerList = new ArrayList<>(players);
+        for (int i = 0; i < playerList.size(); i++) {
+            Player player = playerList.get(i);
             String experienced = (player.isPreviousExperience()) ? "Yes" : "No";
             System.out.printf("%d %s | Height: %d | Experienced: %s %n", i+1, player, player.getHeightInInches(), experienced);
         }
     }
 
-    private static Player playerSelect(List<Player> players) {
+    private static Player playerSelect(Set<Player> players) {
+        List<Player> playerList = new ArrayList<>(players);
         listPlayers(players);
-        int playerNumber = 0;
+        int playerNumber;
         do {
             playerNumber = Prompter.promptInt("Player> ");
-        } while (playerNumber == 0 && playerNumber <= players.size());
-        return players.get(playerNumber -1);
+        } while (playerNumber == 0 && playerNumber <= playerList.size());
+        return playerList.get(playerNumber -1);
     }
 
     private static Team teamSelect() {
@@ -127,7 +123,7 @@ public class LeagueManager {
         int height = 0;
         Team team = teamSelect();
         if (team.getPlayers().size() > 0) {
-            List<Player> players = team.getPlayers();
+            Set<Player> players = team.getPlayers();
             for (Player player : players) {
                 height += player.getHeightInInches();
             }
@@ -138,7 +134,6 @@ public class LeagueManager {
     }
 
     private static void leagueBalanceReport() {
-
         for (Team team : teams) {
             int experiencedPlayers = 0;
             int inExperiencedPlayers = 0;
@@ -168,5 +163,4 @@ public class LeagueManager {
         listPlayers(team.getPlayers());
         showMainMenu();
     }
-
 }
