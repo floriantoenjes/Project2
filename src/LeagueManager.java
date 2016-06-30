@@ -40,7 +40,7 @@ public class LeagueManager {
         if (teams.size() > 0) {
             organizerMenu.addMenuItem("Add Player", LeagueManager::addPlayer);
             organizerMenu.addMenuItem("Delete Player", LeagueManager::removePlayer);
-            organizerMenu.addMenuItem("Height Report", LeagueManager::heightReport);
+            organizerMenu.addMenuItem("Height Report", LeagueManager::teamReport);
             organizerMenu.addMenuItem("League Balance Report", LeagueManager::leagueBalanceReport);
             organizerMenu.addMenuItem("Back", LeagueManager::showMainMenu);
         }
@@ -48,7 +48,7 @@ public class LeagueManager {
     }
 
     private static void createTeam() {
-        if (teams.size() == 0 || availablePlayers.size() % teams.size() != 0) {
+        if (teams.size() < availablePlayers.size()) {
             System.out.print("Team Name> ");
             String team = scanner.nextLine();
             System.out.print("Coach Name> ");
@@ -75,6 +75,7 @@ public class LeagueManager {
     }
 
     private static void addPlayer() {
+
         Team team = teamSelect();
         Player player = playerSelect(availablePlayers);
         team.addPlayer(player);
@@ -87,7 +88,7 @@ public class LeagueManager {
     private static Team teamSelect() {
         int i = 1;
         for (Team team: teams) {
-            System.out.printf("%d %s%n", i, team);
+            System.out.printf("%d %s%n", i++, team);
         }
         System.out.print("Player> ");
         // ToDo: Error Handling
@@ -109,7 +110,7 @@ public class LeagueManager {
         return players.get(scanner.nextInt() -1);
     }
 
-    private static void heightReport() {
+    private static void teamReport() {
         int height = 0;
         Team team = teamSelect();
         if (team.getPlayers().size() > 0) {

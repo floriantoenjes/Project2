@@ -14,15 +14,15 @@ public class Team implements Comparable<Team>{
 
     @Override
     public int compareTo(Team o) {
-        return this.name.compareTo(o.name);
+        return this.name.compareToIgnoreCase(o.name);
     }
 
     public void addPlayer(Player player) {
         if (!players.contains(player)) {
             players.add(player);
-            players.sort((player1, player2) -> {
-                return player1.toString().compareTo(player2.toString());
-            });
+            players.sort((player1, player2) ->
+                player1.toString().compareTo(player2.toString())
+            );
         }
     }
 
