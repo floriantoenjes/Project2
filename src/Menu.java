@@ -8,7 +8,7 @@ public class Menu  {
         for (int i = 0; i < menuItems.size(); i++) {
             System.out.printf("%d: %s%n", i + 1, menuItems.get(i));
         }
-        System.out.print("Option? > ");
+        System.out.printf("%nOption? > ");
         int selection = (new Scanner(System.in)).nextInt() - 1;
         menuItems.get(selection).execute();
     }

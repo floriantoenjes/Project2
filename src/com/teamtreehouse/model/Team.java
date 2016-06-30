@@ -18,10 +18,12 @@ public class Team implements Comparable<Team>{
     }
 
     public void addPlayer(Player player) {
-        players.add(player);
-        players.sort( (player1, player2) -> {
-            return player1.toString().compareTo(player2.toString());
-        });
+        if (!players.contains(player)) {
+            players.add(player);
+            players.sort((player1, player2) -> {
+                return player1.toString().compareTo(player2.toString());
+            });
+        }
     }
 
     public void removePlayer(Player player) {
