@@ -85,6 +85,10 @@ public class LeagueManager {
         return teams.get(scanner.nextInt() - 1);
     }
 
+    private static void listPlayers(List<Player> players) {
+
+    }
+
     private static Player playerSelect(List<Player> players) {
         System.out.println();
         for (int i = 0; i < players.size(); i++) {
@@ -128,6 +132,12 @@ public class LeagueManager {
         }
 
         System.out.printf("Experienced Players: %d%n Inexperienced Players: %d%n", experiencedPlayers, inExperiencedPlayers);
+    }
+
+    private static void roster() {
+        Team team = teamSelect();
+
+        for
     }
 
 }
