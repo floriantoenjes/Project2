@@ -10,8 +10,16 @@ public class LeagueManager {
     static Set<Player> availablePlayers = new TreeSet<>(Arrays.asList(players));
     static List<Team> teams = new ArrayList<>();
 
+    static {
+        Team testTeam = new Team("Dolphins", "James");
+        testTeam.addPlayer(new Player("Bernd", "Schuette", 20, true));
+        testTeam.addPlayer(new Player("Heinz", "Gest", 22, false));
+        testTeam.addPlayer(new Player("Marten", "Schuette", 22, true));
+        teams.add(testTeam);
+    }
+
     public static void main(String[] args) {
-        System.out.printf("There are currently %d registered players.%n", players.length);
+        System.out.printf("There are currently %d registered players.%n%n", players.length);
         showMainMenu();
     }
 
@@ -136,13 +144,14 @@ public class LeagueManager {
     private static void leagueBalanceReport() {
         for (Team team : teams) {
             int experiencedPlayers = 0;
-            int inExperiencedPlayers = 0;
+            int inexperiencedPlayers = 0;
             HashMap<Integer, Integer> heightCounts = new HashMap<>();
-            for (Player player : team.getPlayers()) {
+            Set<Player> players = team.getPlayers();
+            for (Player player : players) {
                 if (player.isPreviousExperience()) {
                     experiencedPlayers++;
                 } else {
-                    inExperiencedPlayers++;
+                    inexperiencedPlayers++;
                 }
                 int height = player.getHeightInInches();
                 if (heightCounts.containsKey(height)) {
@@ -151,7 +160,14 @@ public class LeagueManager {
                     heightCounts.put(height, 1);
                 }
             }
-            System.out.printf("Team %s:%nExperienced Players: %d%nInexperienced Players: %d%n", team, experiencedPlayers, inExperiencedPlayers);
+            double ratioExperienced = 100d / players.size() * experiencedPlayers;
+            double ratioInexperienced = 100d / players.size() * inexperiencedPlayers;
+            System.out.printf("Team %s:%n" +
+                    "Experienced Player Ratio: %.2f%%%n" +
+                    "Experienced Players: %d" +
+                    "%nInexperienced Player ratio: %.2f%%%n" +
+                    "Inexperienced Players: %d%n",
+                    team, ratioExperienced, experiencedPlayers, ratioInexperienced, inexperiencedPlayers);
             System.out.printf("%nHeight Report%n");
             heightCounts.forEach((height, count) -> System.out.printf("%s\": %d players%n", height, count));
             System.out.println();
