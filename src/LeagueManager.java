@@ -13,9 +13,9 @@ public class LeagueManager {
 
     static {
         Team testTeam = new Team("Dolphins", "James");
-        testTeam.addPlayer(new Player("Bernd", "Schuette", 20, true));
-        testTeam.addPlayer(new Player("Heinz", "Gest", 22, false));
-        testTeam.addPlayer(new Player("Marten", "Schuette", 22, true));
+        testTeam.addPlayer(new Player("Bernd", "Hemmel", 35, true));
+        testTeam.addPlayer(new Player("Henry", "Karl", 47, false));
+        testTeam.addPlayer(new Player("Marten", "Schuette", 40, true));
         teams.add(testTeam);
     }
 
@@ -122,7 +122,7 @@ public class LeagueManager {
         for (Team team: teams) {
             System.out.printf("%d %s%n", i++, team);
         }
-        int teamNumber = 0;
+        int teamNumber;
         do {
             teamNumber = Prompter.promptInt("Team>");
         } while (teamNumber < 1 || teamNumber > teams.size());
@@ -130,15 +130,39 @@ public class LeagueManager {
     }
 
     private static void teamReport() {
-        int height = 0;
         Team team = teamSelect();
         if (team.getPlayers().size() > 0) {
+            int height = 0;
+            Set<Player> small = new TreeSet<>();
+            Set<Player> usual = new TreeSet<>();
+            Set<Player> big = new TreeSet<>();
             Set<Player> players = team.getPlayers();
+
             for (Player player : players) {
+                int tmpHeight = player.getHeightInInches();
+                if (tmpHeight < 39) {
+                    small.add(player);
+                } else if (tmpHeight > 38 && tmpHeight < 44) {
+                    usual.add(player);
+                } else {
+                    big.add(player);
+                }
                 height += player.getHeightInInches();
             }
             int avgHeight = height / players.size();
             System.out.printf("%nThe average height for team %s is %d inches%n%n", team, avgHeight);
+            System.out.println("Small:");
+            small.forEach( p ->
+                System.out.printf("%s - %d\"%n%n", p.toString(), p.getHeightInInches())
+            );
+            System.out.println("Usual:");
+            usual.forEach( p ->
+                System.out.printf("%s - %d\"%n%n", p.toString(), p.getHeightInInches())
+            );
+            System.out.println("Big:");
+            big.forEach( p ->
+                System.out.printf("%s - %d\"%n%n", p.toString(), p.getHeightInInches())
+            );
         }
         showOrganizerMenu();
     }
@@ -170,8 +194,6 @@ public class LeagueManager {
                     "%nInexperienced Player ratio: %.2f%%%n" +
                     "Inexperienced Players: %d%n",
                     team, ratioExperienced, experiencedPlayers, ratioInexperienced, inexperiencedPlayers);
-            System.out.printf("%nHeight Report%n");
-            heightCounts.forEach((height, count) -> System.out.printf("%s\": %d players%n", height, count));
             System.out.println();
         }
         showOrganizerMenu();
