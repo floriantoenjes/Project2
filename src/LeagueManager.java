@@ -6,7 +6,7 @@ import java.util.*;
 
 public class LeagueManager {
     static Player[] players = Players.load();
-    static List<Player> allPlayers = new ArrayList<>(Arrays.asList(players));
+    static List<Player> availablePlayers = new ArrayList<>(Arrays.asList(players));
     static ArrayList<Team> teams = new ArrayList<>();
     static Scanner scanner = new Scanner(System.in);
 
@@ -20,16 +20,11 @@ public class LeagueManager {
         Menu mainMenu = new Menu();
         mainMenu.addMenuItem("Organizer", LeagueManager::showOrganizerMenu);
         mainMenu.addMenuItem("Coach", LeagueManager::showCoachMenu);
-        mainMenu.addMenuItem("Administrator", LeagueManager::showAdminMenu);
         mainMenu.addMenuItem("Exit", () -> {
             System.out.println("Exiting...");
             System.exit(0);
         });
         mainMenu.show();
-    }
-
-    private static void showAdminMenu() {
-
     }
 
     private static void showCoachMenu() {
@@ -53,14 +48,16 @@ public class LeagueManager {
     }
 
     private static void createTeam() {
-        System.out.print("Team Name> ");
-        String team = scanner.nextLine();
-        System.out.print("Coach Name> ");
-        String coach = scanner.nextLine();
+        if (teams.size() == 0 || availablePlayers.size() % teams.size() != 0) {
+            System.out.print("Team Name> ");
+            String team = scanner.nextLine();
+            System.out.print("Coach Name> ");
+            String coach = scanner.nextLine();
 
-        teams.add(new Team(team, coach));
-        Collections.sort(teams);
-        System.out.printf("Team %s created.%n", team);
+            teams.add(new Team(team, coach));
+            Collections.sort(teams);
+            System.out.printf("Team %s created.%n", team);
+        }
         showOrganizerMenu();
     }
 
@@ -70,6 +67,7 @@ public class LeagueManager {
         if (players.size() > 0) {
             Player player = playerSelect(players);
             team.removePlayer(player);
+            availablePlayers.add(player);
             System.out.printf("%s has been removed from team %s", player, team);
         }
 
@@ -78,8 +76,9 @@ public class LeagueManager {
 
     private static void addPlayer() {
         Team team = teamSelect();
-        Player player = playerSelect(allPlayers);
+        Player player = playerSelect(availablePlayers);
         team.addPlayer(player);
+        availablePlayers.remove(player);
         System.out.printf("%s has been added to team %s%n", player, team);
 
         showOrganizerMenu();
@@ -138,7 +137,8 @@ public class LeagueManager {
             }
         }
 
-        System.out.printf("Experienced Players: %d%n Inexperienced Players: %d%n", experiencedPlayers, inExperiencedPlayers);
+        System.out.printf("Experienced Players: %d%nInexperienced Players: %d%n", experiencedPlayers, inExperiencedPlayers);
+        showOrganizerMenu();
     }
 
     private static void roster(Team team) {
