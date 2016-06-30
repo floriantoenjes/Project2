@@ -1,3 +1,5 @@
+import util.Prompter;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -8,9 +10,12 @@ public class Menu  {
         for (int i = 0; i < menuItems.size(); i++) {
             System.out.printf("%d) %s%n", i + 1, menuItems.get(i));
         }
-        System.out.printf("%nOption? > ");
-        int selection = (new Scanner(System.in)).nextInt() - 1;
-        menuItems.get(selection).execute();
+        int selection;
+        do {
+            selection = Prompter.promptInt("Option? > ");
+        } while ( selection < 1 || selection > menuItems.size());
+        System.out.println();
+        menuItems.get(selection -1).execute();
     }
 
     public void addMenuItem(String name, Runnable r) {

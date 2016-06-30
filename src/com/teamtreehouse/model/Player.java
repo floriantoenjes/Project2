@@ -36,7 +36,7 @@ public class Player implements Comparable<Player>, Serializable {
   @Override
   public int compareTo(Player other) {
     // We always want to sort by last name then first name
-    return 0;
+    return this.toString().compareToIgnoreCase(other.toString());
   }
 
   @Override
@@ -55,7 +55,7 @@ public class Player implements Comparable<Player>, Serializable {
 
   @Override
   public String toString() {
-    return lastName + " " + firstName;
+    return lastName + ", " + firstName;
   }
 
   @Override
