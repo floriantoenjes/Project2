@@ -217,4 +217,17 @@ public class LeagueManager {
         System.out.printf("%n%s has been added to the waiting list.%n%n", player);
         showOrganizerMenu();
     }
+
+    private static void removePlayerFromLeague() {
+        Player player = playerSelect(availablePlayers);
+        availablePlayers.remove(player);
+        System.out.printf("%s has been removed from the league%n", player);
+        if (waitingList.iterator().hasNext()) {
+            Player newPlayer = waitingList.iterator().next();
+            availablePlayers.add(newPlayer);
+            System.out.printf("%s has been added to the league%n", newPlayer);
+        }
+        System.out.println();
+        showOrganizerMenu();
+    }
 }
