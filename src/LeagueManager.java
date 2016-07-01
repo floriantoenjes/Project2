@@ -52,7 +52,6 @@ public class LeagueManager {
         organizerMenu.show();
     }
 
-
     private static void showCoachMenu() {
         Team team = teamSelect();
         Menu coachMenu = new Menu();
@@ -215,7 +214,7 @@ public class LeagueManager {
         boolean isPreviousExperience = Prompter.promptForYes("Has Experience Y(es)/(N)o> ");
         Player player = new Player(firstName, lastName, heightInInches, isPreviousExperience);
         waitingList.add(player);
-        System.out.printf("%s has been added to the waiting list.", player);
+        System.out.printf("%n%s has been added to the waiting list.%n%n", player);
         showOrganizerMenu();
     }
 }
