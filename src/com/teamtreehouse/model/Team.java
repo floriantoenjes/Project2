@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.TreeSet;
 
 public class Team implements Comparable<Team>{
+    public static int MAX_PLAYERS = 11;
     private final String name;
     private String coach;
     TreeSet<Player> players = new TreeSet<>();

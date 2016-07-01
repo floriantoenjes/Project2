@@ -82,10 +82,14 @@ public class LeagueManager {
 
     private static void addPlayer() {
         Team team = teamSelect();
-        Player player = playerSelect(availablePlayers);
-        team.addPlayer(player);
-        availablePlayers.remove(player);
-        System.out.printf("%n%s has been added to team %s%n%n", player, team);
+        if (team.getPlayers().size() < Team.MAX_PLAYERS) {
+            Player player = playerSelect(availablePlayers);
+            team.addPlayer(player);
+            availablePlayers.remove(player);
+            System.out.printf("%n%s has been added to team %s%n%n", player, team);
+        } else {
+            System.out.printf("Team %s already has %d players", team, Team.MAX_PLAYERS);
+        }
         showOrganizerMenu();
     }
 
@@ -249,16 +253,27 @@ public class LeagueManager {
         if (experiencedPlayers.size() % teams.size() == 0) {
             Iterator<Team> teamIterator = teams.iterator();
             for (Player ePlayer : experiencedPlayers) {
-                if (teamIterator.hasNext()) {
-                    teamIterator.next().addPlayer(ePlayer);
+                if (!teamIterator.hasNext()) {
+                    teamIterator = teams.iterator();
                 }
+                Team team = teamIterator.next();
+                if (team.getPlayers().size() < Team.MAX_PLAYERS) {
+                    team.addPlayer(ePlayer);
+                }
+
             }
             teamIterator = teams.iterator();
             for (Player iPlayer : inExperiencedPlayers) {
-                if (teamIterator.hasNext()) {
-                    teamIterator.next().addPlayer(iPlayer);
+                if (!teamIterator.hasNext()) {
+                    teamIterator = teams.iterator();
+                }
+                Team team = teamIterator.next();
+                if (team.getPlayers().size() < Team.MAX_PLAYERS) {
+                    team.addPlayer(iPlayer);
                 }
             }
+        } else {
+            System.out.println("Not able to automatically build fair teams");
         }
         System.out.println("Fair teams have been build");
         showOrganizerMenu();
