@@ -7,10 +7,10 @@ import util.Prompter;
 import java.util.*;
 
 public class LeagueManager {
-    static Player[] players = Players.load();
-    static Set<Player> availablePlayers = new TreeSet<>(Arrays.asList(players));
-    static Set<Player> waitingList = new LinkedHashSet<>();
-    static List<Team> teams = new ArrayList<>();
+    private static Player[] players = Players.load();
+    private static Set<Player> availablePlayers = new TreeSet<>(Arrays.asList(players));
+    private static Set<Player> waitingList = new LinkedHashSet<>();
+    private static List<Team> teams = new ArrayList<>();
 
     static {
         Team testTeam = new Team("Dolphins", "James");
