@@ -236,11 +236,11 @@ public class LeagueManager {
     }
 
     private static Set<Player> getExperiencedPlayers() {
-        return availablePlayers.stream().filter(p -> p.isPreviousExperience() == true).collect(Collectors.toSet());
+        return availablePlayers.stream().filter(Player::isPreviousExperience).collect(Collectors.toSet());
     }
 
     private static Set<Player> getInexperiencedPlayers() {
-        return availablePlayers.stream().filter(p -> p.isPreviousExperience() == false).collect(Collectors.toSet());
+        return availablePlayers.stream().filter(p -> !p.isPreviousExperience()).collect(Collectors.toSet());
     }
 
     private static void buildFairTeams() {
