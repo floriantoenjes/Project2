@@ -9,6 +9,7 @@ import java.util.*;
 public class LeagueManager {
     static Player[] players = Players.load();
     static Set<Player> availablePlayers = new TreeSet<>(Arrays.asList(players));
+    static Set<Player> waitingList = new LinkedHashSet<>();
     static List<Team> teams = new ArrayList<>();
 
     static {
@@ -37,15 +38,6 @@ public class LeagueManager {
         mainMenu.show();
     }
 
-    private static void showCoachMenu() {
-        Team team = teamSelect();
-        Menu coachMenu = new Menu();
-        coachMenu.addMenuItem("Roster", () -> roster(team));
-        coachMenu.addMenuItem("Back", LeagueManager::showMainMenu);
-        coachMenu.show();
-    }
-
-
     private static void showOrganizerMenu() {
         Menu organizerMenu = new Menu();
         organizerMenu.addMenuItem("Create Team", LeagueManager::createTeam);
@@ -54,9 +46,19 @@ public class LeagueManager {
             organizerMenu.addMenuItem("Delete Player", LeagueManager::removePlayer);
             organizerMenu.addMenuItem("Height Report", LeagueManager::teamReport);
             organizerMenu.addMenuItem("League Balance Report", LeagueManager::leagueBalanceReport);
+            organizerMenu.addMenuItem("Add Player to Waitinglist", LeagueManager::addPlayerToWaitingList);
             organizerMenu.addMenuItem("Back", LeagueManager::showMainMenu);
         }
         organizerMenu.show();
+    }
+
+
+    private static void showCoachMenu() {
+        Team team = teamSelect();
+        Menu coachMenu = new Menu();
+        coachMenu.addMenuItem("Roster", () -> roster(team));
+        coachMenu.addMenuItem("Back", LeagueManager::showMainMenu);
+        coachMenu.show();
     }
 
     private static void createTeam() {
@@ -203,5 +205,17 @@ public class LeagueManager {
     private static void roster(Team team) {
         listPlayers(team.getPlayers());
         showMainMenu();
+    }
+
+    private static void addPlayerToWaitingList() {
+        System.out.println("Enter Player data");
+        String firstName = Prompter.prompt("First Name> ");
+        String lastName = Prompter.prompt("Last Name> ");;
+        int heightInInches = Prompter.promptInt("Height in Inches> ");
+        boolean isPreviousExperience = Prompter.promptForYes("Has Experience Y(es)/(N)o> ");
+        Player player = new Player(firstName, lastName, heightInInches, isPreviousExperience);
+        waitingList.add(player);
+        System.out.printf("%s has been added to the waiting list.", player);
+        showOrganizerMenu();
     }
 }
