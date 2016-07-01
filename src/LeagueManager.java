@@ -9,9 +9,9 @@ import java.util.stream.Collectors;
 
 public class LeagueManager {
     private static Player[] players = Players.load();
-    private static TreeSet<Player> availablePlayers = new TreeSet<>(Arrays.asList(players));
-    private static LinkedHashSet<Player> waitingList = new LinkedHashSet<>();
-    private static ArrayList<Team> teams = new ArrayList<>();
+    private static Set<Player> availablePlayers = new TreeSet<>(Arrays.asList(players));
+    private static Set<Player> waitingList = new LinkedHashSet<>();
+    private static List<Team> teams = new ArrayList<>();
 
     static {
         Team testTeam = new Team("Dolphins", "James");
