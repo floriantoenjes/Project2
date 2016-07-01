@@ -261,5 +261,6 @@ public class LeagueManager {
             }
         }
         System.out.println("Fair teams have been build");
+        showOrganizerMenu();
     }
 }
