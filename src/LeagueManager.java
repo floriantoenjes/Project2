@@ -42,11 +42,12 @@ public class LeagueManager {
         Menu organizerMenu = new Menu();
         organizerMenu.addMenuItem("Create Team", LeagueManager::createTeam);
         if (teams.size() > 0) {
-            organizerMenu.addMenuItem("Add Player", LeagueManager::addPlayer);
-            organizerMenu.addMenuItem("Delete Player", LeagueManager::removePlayer);
-            organizerMenu.addMenuItem("Height Report", LeagueManager::teamReport);
+            organizerMenu.addMenuItem("Add Player to Team", LeagueManager::addPlayer);
+            organizerMenu.addMenuItem("Remove Player from Team", LeagueManager::removePlayer);
+            organizerMenu.addMenuItem("Height Report for Team", LeagueManager::teamReport);
             organizerMenu.addMenuItem("League Balance Report", LeagueManager::leagueBalanceReport);
             organizerMenu.addMenuItem("Add Player to Waitinglist", LeagueManager::addPlayerToWaitingList);
+            organizerMenu.addMenuItem("Remove Player from League", LeagueManager::removePlayerFromLeague);
             organizerMenu.addMenuItem("Back", LeagueManager::showMainMenu);
         }
         organizerMenu.show();
@@ -224,6 +225,7 @@ public class LeagueManager {
         System.out.printf("%s has been removed from the league%n", player);
         if (waitingList.iterator().hasNext()) {
             Player newPlayer = waitingList.iterator().next();
+            waitingList.remove(player);
             availablePlayers.add(newPlayer);
             System.out.printf("%s has been added to the league%n", newPlayer);
         }
