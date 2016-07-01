@@ -14,11 +14,12 @@ public class LeagueManager {
     private static List<Team> teams = new ArrayList<>();
 
     static {
-        Team testTeam = new Team("Dolphins", "James");
-        testTeam.addPlayer(new Player("Bernd", "Hemmel", 35, true));
-        testTeam.addPlayer(new Player("Henry", "Karl", 47, false));
-        testTeam.addPlayer(new Player("Marten", "Schuette", 40, true));
-        teams.add(testTeam);
+        Team testTeam1 = new Team("Dolphins", "James");
+        Team testTeam2 = new Team("Spacers", "Bill");
+        Team testTeam3 = new Team("Djangos", "Freud");
+        teams.add(testTeam1);
+        teams.add(testTeam2);
+        teams.add(testTeam3);
     }
 
     public static void main(String[] args) {
