@@ -5,6 +5,7 @@ import display.Menu;
 import util.Prompter;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class LeagueManager {
     private static Player[] players = Players.load();
@@ -231,5 +232,33 @@ public class LeagueManager {
         }
         System.out.println();
         showOrganizerMenu();
+    }
+
+    private static Set<Player> getExperiencedPlayers() {
+        return availablePlayers.stream().filter(p -> p.isPreviousExperience() == true).collect(Collectors.toSet());
+    }
+
+    private static Set<Player> getInexperiencedPlayers() {
+        return availablePlayers.stream().filter(p -> p.isPreviousExperience() == false).collect(Collectors.toSet());
+    }
+
+    private static void buildFairTeams() {
+        Set<Player> experiencedPlayers = getExperiencedPlayers();
+        Set<Player> inExperiencedPlayers = getInexperiencedPlayers();
+        if (experiencedPlayers.size() % teams.size() == 0) {
+            Iterator<Team> teamIterator = teams.iterator();
+            for (Player ePlayer : experiencedPlayers) {
+                if (teamIterator.hasNext()) {
+                    teamIterator.next().addPlayer(ePlayer);
+                }
+            }
+            teamIterator = teams.iterator();
+            for (Player iPlayer : inExperiencedPlayers) {
+                if (teamIterator.hasNext()) {
+                    teamIterator.next().addPlayer(iPlayer);
+                }
+            }
+        }
+
     }
 }
