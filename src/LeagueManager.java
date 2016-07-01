@@ -49,6 +49,7 @@ public class LeagueManager {
             organizerMenu.addMenuItem("League Balance Report", LeagueManager::leagueBalanceReport);
             organizerMenu.addMenuItem("Add Player to Waitinglist", LeagueManager::addPlayerToWaitingList);
             organizerMenu.addMenuItem("Remove Player from League", LeagueManager::removePlayerFromLeague);
+            organizerMenu.addMenuItem("Build Fair Teams", LeagueManager::buildFairTeams);
             organizerMenu.addMenuItem("Back", LeagueManager::showMainMenu);
         }
         organizerMenu.show();
