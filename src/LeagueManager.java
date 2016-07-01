@@ -81,7 +81,7 @@ public class LeagueManager {
         Player player = playerSelect(availablePlayers);
         team.addPlayer(player);
         availablePlayers.remove(player);
-        System.out.printf("%n%s has been added to team %s%n", player, team);
+        System.out.printf("%n%s has been added to team %s%n%n", player, team);
         showOrganizerMenu();
     }
 
@@ -113,7 +113,7 @@ public class LeagueManager {
         int playerNumber;
         do {
             playerNumber = Prompter.promptInt("Player> ") -1;
-        } while (playerNumber <= 0 || playerNumber >= playerList.size());
+        } while (playerNumber < 0 || playerNumber >= playerList.size());
         return playerList.get(playerNumber);
     }
 
