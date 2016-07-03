@@ -1,4 +1,4 @@
-package display;
+package presentation;
 
 public class MenuItem {
     private String name;
