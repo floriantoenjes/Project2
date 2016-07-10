@@ -1,6 +1,6 @@
-package presentation;
+package com.floriantoenjes.presentation;
 
-import util.Prompter;
+import com.floriantoenjes.util.Prompter;
 
 import java.util.ArrayList;
 

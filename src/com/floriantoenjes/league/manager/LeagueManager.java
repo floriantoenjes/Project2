@@ -1,8 +1,10 @@
+package com.floriantoenjes.league.manager;
+
 import com.teamtreehouse.model.Player;
 import com.teamtreehouse.model.Players;
 import com.teamtreehouse.model.Team;
-import presentation.Menu;
-import util.Prompter;
+import com.floriantoenjes.presentation.Menu;
+import com.floriantoenjes.util.Prompter;
 
 import java.util.*;
 import java.util.stream.Collectors;

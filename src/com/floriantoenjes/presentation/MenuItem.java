@@ -1,4 +1,4 @@
-package presentation;
+package com.floriantoenjes.presentation;
 
 public class MenuItem {
     private String name;
