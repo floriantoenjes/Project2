@@ -91,7 +91,7 @@ public class LeagueManager {
             availablePlayers.remove(player);
             System.out.printf("%n%s has been added to team %s%n%n", player, team);
         } else {
-            System.out.printf("Team %s already has %d players", team, Team.MAX_PLAYERS);
+            System.out.printf("Team %s already has %d players%n", team, Team.MAX_PLAYERS);
         }
         showOrganizerMenu();
     }
