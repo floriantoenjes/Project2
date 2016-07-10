@@ -262,8 +262,9 @@ public class LeagueManager {
                 Team team = teamIterator.next();
                 if (team.getPlayers().size() < Team.MAX_PLAYERS) {
                     team.addPlayer(ePlayer);
-                }
+                    availablePlayers.remove(ePlayer);
 
+                }
             }
             teamIterator = teams.iterator();
             for (Player iPlayer : inExperiencedPlayers) {
@@ -273,12 +274,13 @@ public class LeagueManager {
                 Team team = teamIterator.next();
                 if (team.getPlayers().size() < Team.MAX_PLAYERS) {
                     team.addPlayer(iPlayer);
+                    availablePlayers.remove(iPlayer);
                 }
             }
+            System.out.println("Fair teams have been build");
         } else {
             System.out.println("Not able to automatically build fair teams");
         }
-        System.out.println("Fair teams have been build");
         showOrganizerMenu();
     }
 }
