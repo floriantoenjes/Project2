@@ -87,7 +87,7 @@ public class LeagueManager {
             addPlayerToTeam(team, player);
             System.out.printf("%n%s has been added to team %s%n%n", player, team);
         } else {
-            System.out.printf("Team %s already has %d players%n", team, Team.MAX_PLAYERS);
+            System.out.printf("Team %s already has %d players%n%n", team, Team.MAX_PLAYERS);
         }
         showOrganizerMenu();
     }
@@ -137,7 +137,8 @@ public class LeagueManager {
         do {
             teamNumber = Prompter.promptInt("Team>");
         } while (teamNumber < 1 || teamNumber > teams.size());
-        return teams.get( teamNumber - 1);
+        System.out.println();
+        return teams.get(teamNumber - 1);
     }
 
     private static void teamReport() {
@@ -165,17 +166,20 @@ public class LeagueManager {
             System.out.printf("%nThe average height for team %s is %d inches%n%n", team, avgHeight);
             System.out.printf("%d Small:%n", small.size());
             small.forEach( p ->
-                System.out.printf("%s - %d\"%n%n", p.toString(), p.getHeightInInches())
+                System.out.printf("%s - %d\"%n", p.toString(), p.getHeightInInches())
             );
             System.out.printf("%d Average:%n", average.size());
             average.forEach( p ->
-                System.out.printf("%s - %d\"%n%n", p.toString(), p.getHeightInInches())
+                System.out.printf("%s - %d\"%n", p.toString(), p.getHeightInInches())
             );
             System.out.printf("%d Big:%n", big.size());
             big.forEach( p ->
-                System.out.printf("%s - %d\"%n%n", p.toString(), p.getHeightInInches())
+                System.out.printf("%s - %d\"%n", p.toString(), p.getHeightInInches())
             );
+        } else {
+            System.out.println("There are no players in this team.");
         }
+        System.out.println();
         showOrganizerMenu();
     }
 
@@ -212,7 +216,11 @@ public class LeagueManager {
     }
 
     private static void roster(Team team) {
-        listPlayers(team.getPlayers());
+        if (team.getPlayers().size() > 0) {
+            listPlayers(team.getPlayers());
+        } else {
+            System.out.printf("Team %s currently has no players.%n", team);
+        }
         showMainMenu();
     }
 
