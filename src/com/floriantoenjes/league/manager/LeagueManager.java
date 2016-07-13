@@ -15,17 +15,9 @@ public class LeagueManager {
     private static Set<Player> waitingList = new LinkedHashSet<>();
     private static List<Team> teams = new ArrayList<>();
 
-    static {
-        Team testTeam1 = new Team("Dolphins", "James");
-        Team testTeam2 = new Team("Spacers", "Bill");
-        Team testTeam3 = new Team("Djangos", "Freud");
-        teams.add(testTeam1);
-        teams.add(testTeam2);
-        teams.add(testTeam3);
-    }
-
     public static void main(String[] args) {
         System.out.printf("There are currently %d registered players.%n%n", players.length);
+        createMockData();
         showMainMenu();
     }
 
@@ -83,12 +75,16 @@ public class LeagueManager {
         showOrganizerMenu();
     }
 
+    private static void addPlayerToTeam(Team team, Player player) {
+        team.addPlayer(player);
+        availablePlayers.remove(player);
+    }
+
     private static void addPlayer() {
         Team team = teamSelect();
         if (team.getPlayers().size() < Team.MAX_PLAYERS) {
             Player player = playerSelect(availablePlayers);
-            team.addPlayer(player);
-            availablePlayers.remove(player);
+            addPlayerToTeam(team, player);
             System.out.printf("%n%s has been added to team %s%n%n", player, team);
         } else {
             System.out.printf("Team %s already has %d players%n", team, Team.MAX_PLAYERS);
@@ -96,13 +92,17 @@ public class LeagueManager {
         showOrganizerMenu();
     }
 
+    private static void removePlayerFromTeam(Team team, Player player) {
+        team.removePlayer(player);
+        availablePlayers.add(player);
+    }
+
     private static void removePlayer() {
         Team team = teamSelect();
         Set<Player> players = team.getPlayers();
         if (players.size() > 0) {
             Player player = playerSelect(players);
-            team.removePlayer(player);
-            availablePlayers.add(player);
+            removePlayerFromTeam(team, player);
             System.out.printf("%n%s has been removed from team %s%n%n", player, team);
         }
         showOrganizerMenu();
@@ -229,16 +229,20 @@ public class LeagueManager {
     }
 
     private static void removePlayerFromLeague() {
-        Player player = playerSelect(availablePlayers);
-        availablePlayers.remove(player);
-        System.out.printf("%s has been removed from the league%n", player);
-        if (waitingList.iterator().hasNext()) {
-            Player newPlayer = waitingList.iterator().next();
-            waitingList.remove(player);
-            availablePlayers.add(newPlayer);
-            System.out.printf("%s has been added to the league%n", newPlayer);
+        if (availablePlayers.size() > 0) {
+            Player player = playerSelect(availablePlayers);
+            availablePlayers.remove(player);
+            System.out.printf("%s has been removed from the league%n", player);
+            if (waitingList.iterator().hasNext()) {
+                Player newPlayer = waitingList.iterator().next();
+                waitingList.remove(player);
+                availablePlayers.add(newPlayer);
+                System.out.printf("%s has been added to the league%n", newPlayer);
+            }
+            System.out.println();
+        } else {
+            System.out.println("All players are assigned to teams!");
         }
-        System.out.println();
         showOrganizerMenu();
     }
 
@@ -261,9 +265,7 @@ public class LeagueManager {
                 }
                 Team team = teamIterator.next();
                 if (team.getPlayers().size() < Team.MAX_PLAYERS) {
-                    team.addPlayer(ePlayer);
-                    availablePlayers.remove(ePlayer);
-
+                    addPlayerToTeam(team, ePlayer);
                 }
             }
             teamIterator = teams.iterator();
@@ -273,8 +275,7 @@ public class LeagueManager {
                 }
                 Team team = teamIterator.next();
                 if (team.getPlayers().size() < Team.MAX_PLAYERS) {
-                    team.addPlayer(iPlayer);
-                    availablePlayers.remove(iPlayer);
+                    addPlayerToTeam(team, iPlayer);
                 }
             }
             System.out.println("Fair teams have been build");
@@ -282,5 +283,14 @@ public class LeagueManager {
             System.out.println("Not able to automatically build fair teams");
         }
         showOrganizerMenu();
+    }
+
+    public static void createMockData() {
+        Team testTeam1 = new Team("Dolphins", "James");
+        Team testTeam2 = new Team("Spacers", "Bill");
+        Team testTeam3 = new Team("Djangos", "Freud");
+        teams.add(testTeam1);
+        teams.add(testTeam2);
+        teams.add(testTeam3);
     }
 }
