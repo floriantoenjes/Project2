@@ -82,11 +82,14 @@ public class LeagueManager {
 
     private static void addPlayer() {
         Team team = teamSelect();
-        if (team.getPlayers().size() < Team.MAX_PLAYERS) {
+        if (team.getPlayers().size() < Team.MAX_PLAYERS && availablePlayers.size() > 0) {
             Player player = playerSelect(availablePlayers);
             addPlayerToTeam(team, player);
             System.out.printf("%n%s has been added to team %s%n%n", player, team);
+        } else if (!(availablePlayers.size() > 0)){
+            System.out.printf("There are currently no players available.%n%n");
         } else {
+
             System.out.printf("Team %s already has %d players%n%n", team, Team.MAX_PLAYERS);
         }
         showOrganizerMenu();
